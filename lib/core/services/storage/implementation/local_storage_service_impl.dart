@@ -1,10 +1,10 @@
-import 'package:auth_todo/core/services/storage/local_storage_service.dart';
+import 'package:auth_todo/core/services/storage/interface/local_storage_service.dart';
 import 'package:hive/hive.dart';
 
-class HiveStorageService implements LocalStorageService {
+class HiveStorageServiceImpl implements LocalStorageService {
   final Box _box;
 
-  HiveStorageService(this._box);
+  HiveStorageServiceImpl(this._box);
 
   @override
   Future<void> save(String key, String value) async {

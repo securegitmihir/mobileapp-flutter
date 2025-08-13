@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:auth_todo/core/constants/constants.dart';
-import 'package:auth_todo/core/services/http/api_client.dart';
+import 'package:auth_todo/core/services/http/interface/api_client.dart';
 import 'package:auth_todo/core/services/http/dto/api_response.dart';
 import 'package:auth_todo/core/services/http/dto/api_request.dart';
 import 'package:http/http.dart' as http;

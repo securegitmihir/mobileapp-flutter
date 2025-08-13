@@ -1,9 +1,9 @@
 import 'package:auth_todo/core/constants/constants.dart';
 import 'package:auth_todo/core/error/exception.dart';
-import 'package:auth_todo/core/services/http/api_client.dart';
+import 'package:auth_todo/core/services/http/interface/api_client.dart';
 import 'package:auth_todo/core/services/http/dto/api_request.dart';
 import 'package:auth_todo/features/auth/data/model/user_model.dart';
-import 'package:auth_todo/features/auth/data/provider/auth_api_provider.dart';
+import 'package:auth_todo/features/auth/data/provider/interface/auth_api_provider.dart';
 
 class AuthApiProviderImpl implements AuthApiProvider {
   final ApiClient _apiClient;

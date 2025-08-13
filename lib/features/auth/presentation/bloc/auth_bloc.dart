@@ -1,24 +1,24 @@
-import 'package:auth_todo/core/usecases/usecase.dart';
-import 'package:auth_todo/features/auth/domain/usecases/user_sign_in.dart';
-import 'package:auth_todo/features/auth/domain/usecases/user_sign_out.dart';
-import 'package:auth_todo/features/auth/domain/usecases/user_sign_up.dart';
-import 'package:auth_todo/features/auth/domain/usecases/validate_token.dart';
+import 'package:auth_todo/core/usecases/usecase_interface.dart';
+import 'package:auth_todo/features/auth/domain/usecases/implementation/user_sign_in_use_case.dart';
+import 'package:auth_todo/features/auth/domain/usecases/implementation/user_sign_out_use_case.dart';
+import 'package:auth_todo/features/auth/domain/usecases/implementation/user_sign_up_use_case.dart';
+import 'package:auth_todo/features/auth/domain/usecases/implementation/validate_token_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final UserSignIn _userSignIn;
-  final UserSignUp _userSignUp;
-  final ValidateToken _validateToken;
-  final UserSignOut _userSignOut;
+  final UserSignInUseCase _userSignInUseCase;
+  final UserSignUpUseCase _userSignUpUseCase;
+  final ValidateTokenUseCase _validateTokenUseCase;
+  final UserSignOutUseCase _userSignOutUseCase;
 
   AuthBloc(
-    this._userSignIn,
-    this._userSignUp,
-    this._validateToken,
-    this._userSignOut,
+    this._userSignInUseCase,
+    this._userSignUpUseCase,
+    this._validateTokenUseCase,
+    this._userSignOutUseCase,
   ) : super(AuthInitial()) {
     on<AuthSignUp>(_onAuthSignUp);
     on<AuthLogin>(_onAuthLogin);
@@ -30,7 +30,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
   void _onAuthSignUp(AuthSignUp event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    await _userSignUp(
+    await _userSignUpUseCase(
       UserSignUpParams(username: event.username, password: event.password),
     ).then((result) {
       result.fold(
@@ -42,7 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onAuthLogin(AuthLogin event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    await _userSignIn(
+    await _userSignInUseCase(
       UserSignInParams(username: event.username, password: event.password),
     ).then((result) {
       result.fold(
@@ -57,7 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
-    await _validateToken(NoParams()).then((result) {
+    await _validateTokenUseCase(NoParams()).then((result) {
       result.fold((failure) => emit(AuthFailure(failure.message)), (isValid) {
         if (isValid) {
           emit(AuthSuccess());
@@ -70,7 +70,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onAuthSignOut(event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    await _userSignOut(NoParams()).then((result) {
+    await _userSignOutUseCase(NoParams()).then((result) {
       result.fold(
         (failure) => emit(AuthFailure(failure.message)),
         (_) => emit(AuthInitial()),

@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:auth_todo/core/common/entities/user.dart';
 import 'package:auth_todo/core/error/failure.dart';
 import 'package:auth_todo/features/auth/data/model/user_model.dart';
-import 'package:auth_todo/features/auth/data/provider/auth_api_provider.dart';
-import 'package:auth_todo/features/auth/data/provider/auth_local_provider.dart';
-import 'package:auth_todo/features/auth/domain/repository/auth_repository.dart';
+import 'package:auth_todo/features/auth/data/provider/interface/auth_api_provider.dart';
+import 'package:auth_todo/features/auth/data/provider/interface/auth_local_provider.dart';
+import 'package:auth_todo/features/auth/domain/repository/interface/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -54,6 +54,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (token == null || token.isEmpty) {
         return Left(Failure(''));
       }
+
       final isValidToken = await _authApiProvider.checkLoggedIn(token);
       return Right(isValidToken);
     } catch (e) {

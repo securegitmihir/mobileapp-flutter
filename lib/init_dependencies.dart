@@ -1,18 +1,18 @@
 import 'package:auth_todo/core/constants/constants.dart';
-import 'package:auth_todo/core/services/http/api_client.dart';
-import 'package:auth_todo/core/services/http/api_client_impl.dart';
-import 'package:auth_todo/core/services/storage/local_storage_service.dart';
-import 'package:auth_todo/core/services/storage/local_storage_service_impl.dart';
-import 'package:auth_todo/features/auth/data/provider/auth_api_provider.dart';
-import 'package:auth_todo/features/auth/data/provider/auth_api_provider_impl.dart';
-import 'package:auth_todo/features/auth/data/provider/auth_local_provider.dart';
-import 'package:auth_todo/features/auth/data/provider/auth_local_provider_impl.dart';
-import 'package:auth_todo/features/auth/data/repository/auth_repository_impl.dart';
-import 'package:auth_todo/features/auth/domain/repository/auth_repository.dart';
-import 'package:auth_todo/features/auth/domain/usecases/user_sign_in.dart';
-import 'package:auth_todo/features/auth/domain/usecases/user_sign_out.dart';
-import 'package:auth_todo/features/auth/domain/usecases/user_sign_up.dart';
-import 'package:auth_todo/features/auth/domain/usecases/validate_token.dart';
+import 'package:auth_todo/core/services/http/interface/api_client.dart';
+import 'package:auth_todo/core/services/http/implementation/api_client_impl.dart';
+import 'package:auth_todo/core/services/storage/interface/local_storage_service.dart';
+import 'package:auth_todo/core/services/storage/implementation/local_storage_service_impl.dart';
+import 'package:auth_todo/features/auth/data/provider/interface/auth_api_provider.dart';
+import 'package:auth_todo/features/auth/data/provider/implementation/auth_api_provider_impl.dart';
+import 'package:auth_todo/features/auth/data/provider/interface/auth_local_provider.dart';
+import 'package:auth_todo/features/auth/data/provider/implementation/auth_local_provider_impl.dart';
+import 'package:auth_todo/features/auth/data/repository/implementation/auth_repository_impl.dart';
+import 'package:auth_todo/features/auth/domain/repository/interface/auth_repository.dart';
+import 'package:auth_todo/features/auth/domain/usecases/implementation/user_sign_in_use_case.dart';
+import 'package:auth_todo/features/auth/domain/usecases/implementation/user_sign_out_use_case.dart';
+import 'package:auth_todo/features/auth/domain/usecases/implementation/user_sign_up_use_case.dart';
+import 'package:auth_todo/features/auth/domain/usecases/implementation/validate_token_use_case.dart';
 import 'package:auth_todo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:auth_todo/features/todo/presentation/bloc/todo_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -34,7 +34,7 @@ Future<void> initDependencies() async {
   serviceLocator.registerLazySingleton(() => hiveBox);
 
   serviceLocator.registerLazySingleton<LocalStorageService>(
-    () => HiveStorageService(serviceLocator()),
+    () => HiveStorageServiceImpl(serviceLocator()),
   );
 
   serviceLocator.registerFactory<ApiClient>(
@@ -53,10 +53,10 @@ Future<void> initDependencies() async {
     () => AuthRepositoryImpl(serviceLocator(), serviceLocator()),
   );
 
-  serviceLocator.registerFactory(() => ValidateToken(serviceLocator()));
-  serviceLocator.registerFactory(() => UserSignIn(serviceLocator()));
-  serviceLocator.registerFactory(() => UserSignOut(serviceLocator()));
-  serviceLocator.registerFactory(() => UserSignUp(serviceLocator()));
+  serviceLocator.registerFactory(() => ValidateTokenUseCase(serviceLocator()));
+  serviceLocator.registerFactory(() => UserSignInUseCase(serviceLocator()));
+  serviceLocator.registerFactory(() => UserSignOutUseCase(serviceLocator()));
+  serviceLocator.registerFactory(() => UserSignUpUseCase(serviceLocator()));
 
   serviceLocator.registerLazySingleton(
     () => AuthBloc(

@@ -1,6 +1,5 @@
 import 'package:auth_todo/features/todo/domain/entities.dart';
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'todo_event.dart';
 part 'todo_state.dart';

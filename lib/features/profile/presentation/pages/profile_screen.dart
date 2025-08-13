@@ -5,6 +5,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("build called profile screen");
     return Scaffold(body: Center(child: Text('Profile Screen')));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:auth_todo/core/constants/constants.dart';
-import 'package:auth_todo/core/services/storage/local_storage_service.dart';
-import 'package:auth_todo/features/auth/data/provider/auth_local_provider.dart';
+import 'package:auth_todo/core/services/storage/interface/local_storage_service.dart';
+import 'package:auth_todo/features/auth/data/provider/interface/auth_local_provider.dart';
 
 class AuthLocalProviderImpl implements AuthLocalProvider {
   final LocalStorageService _storageService;

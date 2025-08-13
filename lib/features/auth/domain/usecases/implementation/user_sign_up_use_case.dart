@@ -1,13 +1,13 @@
 import 'package:auth_todo/core/common/entities/user.dart';
 import 'package:auth_todo/core/error/failure.dart';
-import 'package:auth_todo/core/usecases/usecase.dart';
-import 'package:auth_todo/features/auth/domain/repository/auth_repository.dart';
+import 'package:auth_todo/core/usecases/usecase_interface.dart';
+import 'package:auth_todo/features/auth/domain/repository/interface/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class UserSignUp implements UseCase<User, UserSignUpParams> {
+class UserSignUpUseCase implements UseCaseInterface<User, UserSignUpParams> {
   final AuthRepository authRepository;
 
-  UserSignUp(this.authRepository);
+  UserSignUpUseCase(this.authRepository);
 
   @override
   Future<Either<Failure, User>> call(UserSignUpParams params) async {

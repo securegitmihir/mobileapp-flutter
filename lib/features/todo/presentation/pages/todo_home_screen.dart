@@ -15,6 +15,7 @@ class TodoHomeScreen extends StatefulWidget {
 class _TodoHomeScreenState extends State<TodoHomeScreen> {
   @override
   void initState() {
+    print("init state called home screen");
     super.initState();
     context.read<TodoBloc>().add(TodoFetch());
   }
