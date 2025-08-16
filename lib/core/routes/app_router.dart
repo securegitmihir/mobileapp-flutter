@@ -7,10 +7,6 @@ import 'package:auth_todo/features/splash/presentation/pages/splash_screen.dart'
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// TODO - Navigation with BLoC
-// TODO - Test Cases.
-//TODO - Token Validation logic
-
 final appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,
   initialLocation: RoutePaths.splash,

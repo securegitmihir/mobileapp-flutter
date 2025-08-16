@@ -1,4 +1,4 @@
-import 'package:auth_todo/core/usecases/usecase_interface.dart';
+import 'package:auth_todo/core/usecases/interface/usecase_interface.dart';
 import 'package:auth_todo/features/auth/domain/usecases/implementation/user_sign_in_use_case.dart';
 import 'package:auth_todo/features/auth/domain/usecases/implementation/user_sign_out_use_case.dart';
 import 'package:auth_todo/features/auth/domain/usecases/implementation/user_sign_up_use_case.dart';
@@ -30,26 +30,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
   void _onAuthSignUp(AuthSignUp event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    await _userSignUpUseCase(
+    final result = await _userSignUpUseCase(
       UserSignUpParams(username: event.username, password: event.password),
-    ).then((result) {
-      result.fold(
-        (failure) => emit(AuthFailure(failure.message)),
-        (user) => emit(AuthSuccess()),
-      );
-    });
+    );
+    result.fold(
+      (failure) => emit(AuthFailure(failure.message)),
+      (user) => emit(AuthSuccess()),
+    );
   }
 
   void _onAuthLogin(AuthLogin event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    await _userSignInUseCase(
+    final result = await _userSignInUseCase(
       UserSignInParams(username: event.username, password: event.password),
-    ).then((result) {
-      result.fold(
-        (failure) => emit(AuthFailure(failure.message)),
-        (user) => emit(AuthSuccess()),
-      );
-    });
+    );
+    result.fold(
+      (failure) => emit(AuthFailure(failure.message)),
+      (user) => emit(AuthSuccess()),
+    );
   }
 
   void _onAuthCheckLoggedIn(
@@ -57,24 +55,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
-    await _validateTokenUseCase(NoParams()).then((result) {
-      result.fold((failure) => emit(AuthFailure(failure.message)), (isValid) {
-        if (isValid) {
-          emit(AuthSuccess());
-        } else {
-          emit(AuthNoToken());
-        }
-      });
+    final result = await _validateTokenUseCase(NoParams());
+    result.fold((failure) => emit(AuthFailure(failure.message)), (isValid) {
+      if (isValid) {
+        emit(AuthSuccess());
+      } else {
+        emit(AuthNoToken());
+      }
     });
   }
 
   void _onAuthSignOut(event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    await _userSignOutUseCase(NoParams()).then((result) {
-      result.fold(
-        (failure) => emit(AuthFailure(failure.message)),
-        (_) => emit(AuthInitial()),
-      );
-    });
+    final result = await _userSignOutUseCase(NoParams());
+    result.fold(
+      (failure) => emit(AuthFailure(failure.message)),
+      (_) => emit(AuthInitial()),
+    );
   }
 }

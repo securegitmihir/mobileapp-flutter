@@ -1,5 +1,5 @@
 import 'package:auth_todo/core/error/failure.dart';
-import 'package:auth_todo/core/usecases/usecase_interface.dart';
+import 'package:auth_todo/core/usecases/interface/usecase_interface.dart';
 import 'package:auth_todo/features/auth/domain/repository/interface/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 

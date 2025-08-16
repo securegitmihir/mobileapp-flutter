@@ -1,4 +1,4 @@
-import 'package:auth_todo/features/todo/domain/entities.dart';
+import 'package:auth_todo/features/todo/domain/entities/todo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'todo_event.dart';

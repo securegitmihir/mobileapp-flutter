@@ -54,9 +54,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (token == null || token.isEmpty) {
         return Left(Failure(''));
       }
-
-      final isValidToken = await _authApiProvider.checkLoggedIn(token);
-      return Right(isValidToken);
+      return Right(true);
     } catch (e) {
       return Left(Failure(e.toString()));
     }

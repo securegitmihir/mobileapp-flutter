@@ -18,17 +18,6 @@ class AuthButton extends StatelessWidget {
             onPressed: state is AuthLoading
                 ? null
                 : () => controller.submitForm(context),
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(
-                Theme.of(context).colorScheme.primary,
-              ),
-              foregroundColor: WidgetStateProperty.all(
-                Theme.of(context).colorScheme.onPrimary,
-              ),
-              shape: WidgetStateProperty.all(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-              ),
-            ),
             child: state is AuthLoading
                 ? const CircularProgressIndicator(
                     constraints: BoxConstraints(
@@ -42,7 +31,10 @@ class AuthButton extends StatelessWidget {
                 : ValueListenableBuilder<bool>(
                     valueListenable: controller.isLoginNotifier,
                     builder: (context, isLogin, child) {
-                      return Text(isLogin ? 'Login' : 'Register');
+                      return Text(
+                        isLogin ? 'Login' : 'Register',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      );
                     },
                   ),
           ),
